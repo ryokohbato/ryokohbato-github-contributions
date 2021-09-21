@@ -99,7 +99,7 @@ namespace ryokohbato_github_contributions
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': '" + date.ToString("M/d") + ": " + contributionCount + @"'
+              'text': '<@ryokohbato>\n" + date.ToString("M/d") + "のGitHub Contribution数は" + contributionCount + @"だよ！'
             }
           }
         ]
