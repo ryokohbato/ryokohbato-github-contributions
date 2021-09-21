@@ -17,14 +17,17 @@ namespace ryokohbato_github_contributions
       var result = await GetContributionsAsync();
       var contributions = result.RootElement.GetProperty("data").GetProperty("viewer").GetProperty("contributionsCollection").GetProperty("contributionCalendar").GetProperty("weeks");
 
+      var targetDate = DateTime.Now;
+      targetDate = targetDate.AddDays(-1);
+
       for (int i = contributions.GetArrayLength() - 1; i >= 0; i --)
       {
         var weekContributions = contributions[i].GetProperty("contributionDays");
         for (int j = 0; j < weekContributions.GetArrayLength(); j ++)
         {
-          if (weekContributions[j].GetProperty("date").ToString() == "2021-09-21")
+          if (weekContributions[j].GetProperty("date").ToString() == $"{targetDate.ToString("yyyy-MM-dd")}")
           {
-            var res = await PostToSlackAsync(weekContributions[j].GetProperty("contributionCount").ToString());
+            var res = await PostToSlackAsync(weekContributions[j].GetProperty("contributionCount").ToString(), targetDate);
           }
         }
       }
@@ -80,7 +83,7 @@ namespace ryokohbato_github_contributions
       return result;
     }
 
-    private async static Task<bool> PostToSlackAsync(string contributionCount)
+    private async static Task<bool> PostToSlackAsync(string contributionCount, DateTime date)
     {
       return await _slack.PostJsonMessageAsync(@"
       {
@@ -90,7 +93,7 @@ namespace ryokohbato_github_contributions
             'type': 'section',
             'text': {
               'type': 'mrkdwn',
-              'text': '9/21: " + contributionCount + @"'
+              'text': '" + date.ToString("M/d") + ": " + contributionCount + @"'
             }
           }
         ]
