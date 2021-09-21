@@ -15,7 +15,13 @@ namespace ryokohbato_github_contributions
     public static async Task Main(string[] args)
     {
       var result = await GetContributionsAsync();
-      var contributions = result.RootElement.GetProperty("data").GetProperty("viewer").GetProperty("contributionsCollection").GetProperty("contributionCalendar").GetProperty("weeks");
+      var contributions
+        = result.RootElement
+            .GetProperty("data")
+            .GetProperty("viewer")
+            .GetProperty("contributionsCollection")
+            .GetProperty("contributionCalendar")
+            .GetProperty("weeks");
 
       var targetDate = DateTime.Now;
       targetDate = targetDate.AddDays(-1);
