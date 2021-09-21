@@ -93,7 +93,7 @@ namespace ryokohbato_github_contributions
     {
       return await _slack.PostJsonMessageAsync(@"
       {
-        'channel': 'ryokohbato-dev-log-zatsu',
+        'channel': 'ryokohbato-life',
         'blocks': [
           {
             'type': 'section',
