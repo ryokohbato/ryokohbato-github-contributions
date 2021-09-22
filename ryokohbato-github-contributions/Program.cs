@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using CoreTweet;
 
 namespace ryokohbato_github_contributions
 {
@@ -14,6 +15,13 @@ namespace ryokohbato_github_contributions
     private static Slack _slack = new Slack();
     public static async Task Main(string[] args)
     {
+      var twitterToken = CoreTweet.Tokens.Create(
+        SecretData.Twitter.ConsumerKey,
+        SecretData.Twitter.ConsumerKeySecret,
+        SecretData.Twitter.AccessToken,
+        SecretData.Twitter.AccessTokenSecret
+      );
+
       var result = await GetContributionsAsync();
       var contributions
         = result.RootElement
@@ -34,6 +42,7 @@ namespace ryokohbato_github_contributions
           if (weekContributions[j].GetProperty("date").ToString() == $"{targetDate.ToString("yyyy-MM-dd")}")
           {
             var res = await PostToSlackAsync(weekContributions[j].GetProperty("contributionCount").ToString(), targetDate);
+            twitterToken.Statuses.Update(status => $"{targetDate.ToString("M/d")}のGitHub Contribution数は{weekContributions[j].GetProperty("contributionCount").ToString()}です。");
           }
         }
       }
