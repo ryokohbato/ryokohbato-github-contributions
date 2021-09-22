@@ -41,7 +41,7 @@ namespace ryokohbato_github_contributions
         {
           if (weekContributions[j].GetProperty("date").ToString() == $"{targetDate.ToString("yyyy-MM-dd")}")
           {
-            var res = await PostToSlackAsync(weekContributions[j].GetProperty("contributionCount").ToString(), targetDate);
+            await PostToSlackAsync(weekContributions[j].GetProperty("contributionCount").ToString(), targetDate);
             twitterToken.Statuses.Update(status => $"{targetDate.ToString("M/d")}のGitHub Contribution数は{weekContributions[j].GetProperty("contributionCount").ToString()}です。");
           }
         }
