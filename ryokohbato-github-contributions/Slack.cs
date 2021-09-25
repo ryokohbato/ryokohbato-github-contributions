@@ -22,11 +22,11 @@ namespace ryokohbato_github_contributions
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public async Task<bool> PostMessageAsync(string message, string target, string token)
+    public async Task<bool> PostMessageAsync(string message, string channel, string token)
     {
       Dictionary<string, string> header = new Dictionary<string, string>()
       {
-        { "channel", target },
+        { "channel", channel },
         { "text", message },
       };
 
