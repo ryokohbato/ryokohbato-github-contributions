@@ -100,19 +100,10 @@ namespace ryokohbato_github_contributions
 
     private async static Task<bool> PostToSlackAsync(string contributionCount, DateTime date)
     {
-      return await _slack.PostJsonMessageAsync(@"
-      {
-        'channel': 'ryokohbato-life',
-        'blocks': [
-          {
-            'type': 'section',
-            'text': {
-              'type': 'mrkdwn',
-              'text': '<@ryokohbato>\n" + date.ToString("M/d") + "のGitHub Contribution数は" + contributionCount + @"だよ！'
-            }
-          }
-        ]
-      }", SecretData.Slack.BotUserOAuthToken);
+      return await _slack.PostMessageAsync(
+        "<@ryokohbato>\n" + date.ToString("M/d") + "のGitHub Contribution数は" + contributionCount + @"だよ！",
+        "ryokohbato-life",
+        SecretData.Slack.BotUserOAuthToken);
     }
   }
 }
